@@ -1,0 +1,5 @@
+name: 'Cache Hands-On'
+type: module
+description: 'Module for perfoming hands-on with cache API'
+core_version_requirement: ^10 || ^11
+package: Custom
