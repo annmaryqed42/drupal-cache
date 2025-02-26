@@ -7,6 +7,7 @@ namespace Drupal\cache_handson\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\core\session\AccountProxyInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -24,6 +25,13 @@ class LatestArticlesBlock extends BlockBase implements ContainerFactoryPluginInt
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected EntityTypeManagerInterface $entityTypeManager;
+
+  /**
+   * The current user.
+   *
+   * @var \Drupal\core\session\AccountProxyInterface
+   */
+  protected AccountProxyInterface $currentUser;
   
   /**
    * Constructs a new LatestArticlesBlock instance.
@@ -37,9 +45,14 @@ class LatestArticlesBlock extends BlockBase implements ContainerFactoryPluginInt
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager) {
+  public function __construct(array $configuration,
+   $plugin_id,
+   $plugin_definition, 
+   EntityTypeManagerInterface $entity_type_manager,
+   AccountProxyInterface $current_user) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
+    $this->currentUser = $current_user;
   }
 
   /**
@@ -50,7 +63,8 @@ class LatestArticlesBlock extends BlockBase implements ContainerFactoryPluginInt
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('current_user')
     );
   }
 
@@ -73,11 +87,15 @@ class LatestArticlesBlock extends BlockBase implements ContainerFactoryPluginInt
       $cache_tags[] = 'node:' . $node->id();
     }
 
+    $user_email = $this->currentUser->getEmail() ?? $this->t('No email available');
+    $items[] = ['#markup' => $this->t('Your email: @email', ['@email' => $user_email])];
+
     return [
       '#theme' => 'item_list',
       '#items' => $items,
       '#cache' => [
         'tags' => $cache_tags,
+        'contexts' => ['user'],
       ]
     ];
   }
