@@ -1,0 +1,30 @@
+uuid: 54bec077-8c33-4b91-aa00-0f855a0c494d
+langcode: en
+status: true
+dependencies:
+  module:
+    - cache_handson
+    - user
+  theme:
+    - olivero
+id: olivero_preferredcategoryblock
+theme: olivero
+region: content
+weight: 0
+provider: null
+plugin: preferred_category_block
+settings:
+  id: preferred_category_block
+  label: 'Preferred Category Block'
+  label_display: visible
+  provider: cache_handson
+visibility:
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      authenticated: authenticated
+      content_editor: content_editor
+      administrator: administrator

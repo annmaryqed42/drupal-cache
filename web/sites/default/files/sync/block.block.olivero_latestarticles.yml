@@ -1,0 +1,30 @@
+uuid: c87d415c-674c-4388-ac7a-ec7c2c5ca910
+langcode: en
+status: true
+dependencies:
+  module:
+    - cache_handson
+    - user
+  theme:
+    - olivero
+id: olivero_latestarticles
+theme: olivero
+region: content
+weight: 0
+provider: null
+plugin: latest_articles_block
+settings:
+  id: latest_articles_block
+  label: 'Latest Articles'
+  label_display: visible
+  provider: cache_handson
+visibility:
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      authenticated: authenticated
+      content_editor: content_editor
+      administrator: administrator
