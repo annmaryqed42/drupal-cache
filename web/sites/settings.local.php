@@ -149,3 +149,11 @@ $settings['skip_permissions_hardening'] = TRUE;
  * the language or field module.
  */
 # $settings['config_exclude_modules'] = ['devel', 'stage_file_proxy'];
+
+// Enable reverse proxy support for Varnish.
+$settings['reverse_proxy'] = TRUE;
+$settings['reverse_proxy_addresses'] = ['varnish'];
+
+// Set the page cache to use the External Cache (Varnish).
+$settings['cache']['bins']['page'] = 'cache.backend.null';
+

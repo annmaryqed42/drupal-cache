@@ -1,5 +1,5 @@
 services:
-  cache.context.preferred_taxonomy:
+  cache_context.preferred_taxonomy:
     class: Drupal\cache_handson\Cache\PreferredTaxonomyCacheContext
     arguments: ['@current_user', '@entity_type.manager']
     tags:
