@@ -33,6 +33,10 @@ module:
   page_cache: 0
   path: 0
   path_alias: 0
+  purge: 0
+  purge_purger_http: 0
+  purge_tokens: 0
+  purge_ui: 0
   search: 0
   shortcut: 0
   system: 0
@@ -41,6 +45,7 @@ module:
   toolbar: 0
   update: 0
   user: 0
+  varnish_purger: 0
   views_ui: 0
   views: 10
   standard: 1000
